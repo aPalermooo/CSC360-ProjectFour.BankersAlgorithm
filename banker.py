@@ -35,10 +35,10 @@ def readFile(filename: str) -> ProcessManager:
     file.readline()
 
     # Retrieve max matrix
-    max = []
+    maxMatrix = []
     for i in range(numProcesses):
-        max.append(file.readline().split())
-        max[i] = list(map(int, max[i]))
+        maxMatrix.append(file.readline().split())
+        maxMatrix[i] = list(map(int, maxMatrix[i]))
 
 
     file.readline()
@@ -56,13 +56,12 @@ def readFile(filename: str) -> ProcessManager:
     request = list(map(int, request))
 
 
-    pManager = ProcessManager(numProcesses, numResources, allocation, max, current, request)
+    pManager = ProcessManager(numProcesses, numResources, allocation, maxMatrix, current, request)
     return pManager
 
 
 def main():
     pManager = readFile("s1.txt")
-    pManager.attemptAllocation()
     # print("Printing OBJ")
-    # print(pManager)
+    print(pManager)
 main()
