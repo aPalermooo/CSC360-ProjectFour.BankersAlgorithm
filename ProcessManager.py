@@ -2,8 +2,8 @@
 "
 "   File:       ProcessManager.py
 "   Author:     Xander Palermo <ajp2s@missouristate.edu>
-"   Course:     CSC360
-"   Instructor: Siming Liu
+"   Course:     CSC360 - Operating Systems
+"   Instructor: Dr. Siming Liu
 "   Project:    4 - Implementation of Banker's Algorithm
 "   Date:       21 October 2024
 "
