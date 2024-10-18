@@ -1,4 +1,16 @@
-def readFile(filename):
+"""
+"   
+"   File:       banker.py
+"   Author:     Xander Palermo <ajp2s@missouristate.edu>
+"   Course:     CSC360
+"   Instructor:
+"   Project:    4 - Implementation of Banker's Algorithm
+"   Date:       21 October 2024
+" 
+"""
+from ProcessManager import ProcessManager
+
+def readFile(filename: str) -> ProcessManager:
     # Open File
     file = open(filename, 'r')
 
@@ -10,39 +22,47 @@ def readFile(filename):
     numProcesses = int(numProcesses)
     numResources = int(numResources)
 
-    print(numResources)
-    print(numProcesses)
 
     file.readline()
 
     # Retrieve allocation matrix
     allocation = []
     for i in range(numProcesses):
-        allocation.append(file.readline())
-        allocation[i] = allocation[i].split()
+        allocation.append(file.readline().split())
         allocation[i] = list(map(int, allocation[i]))
 
-    print(allocation)
-    print(type(allocation[0][0]))
 
     file.readline()
 
     # Retrieve max matrix
     max = []
     for i in range(numProcesses):
-        max.append(file.readline())
-        max[i] = max[i].split()
+        max.append(file.readline().split())
         max[i] = list(map(int, max[i]))
 
-    print(max)
-    print(type(max[0][0]))
+
+    file.readline()
 
     # Retrieve current
+    current = file.readline().split()
+    current = list(map(int, current))
 
+    file.readline()
+
+    # Retrieve request
+    request = file.readline().split()
+    request[0] = request[0].split(":")
+    request[0] = request[0][1]
+    request = list(map(int, request))
+
+
+    pManager = ProcessManager(numProcesses, numResources, allocation, max, current, request)
+    return pManager
 
 
 def main():
-    readFile("s1.txt")
-    print("Done")
-
+    pManager = readFile("s1.txt")
+    pManager.attemptAllocation()
+    # print("Printing OBJ")
+    # print(pManager)
 main()
