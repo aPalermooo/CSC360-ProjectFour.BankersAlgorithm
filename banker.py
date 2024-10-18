@@ -3,12 +3,15 @@
 "   File:       banker.py
 "   Author:     Xander Palermo <ajp2s@missouristate.edu>
 "   Course:     CSC360
-"   Instructor:
+"   Instructor: Siming Liu
 "   Project:    4 - Implementation of Banker's Algorithm
 "   Date:       21 October 2024
 " 
 """
+import os
+
 from ProcessManager import ProcessManager
+import sys
 
 def readFile(filename: str) -> ProcessManager:
     # Open File
@@ -59,9 +62,21 @@ def readFile(filename: str) -> ProcessManager:
     pManager = ProcessManager(numProcesses, numResources, allocation, maxMatrix, current, request)
     return pManager
 
+def createLog(message: str) -> None:
+    try:
+        os.remove("banker.txt")
+    except OSError:
+        pass
+    file = open("banker.txt", "w")
+    file.write(message)
+    return
 
-def main():
-    pManager = readFile("s1.txt")
-    # print("Printing OBJ")
-    print(pManager)
+def main() -> int:
+    if not sys.argv[1:]:
+        arg = "s1.txt"
+    else:
+        arg = sys.argv[1]
+    pManager = readFile(arg)
+    createLog(str(pManager))
+    return 0
 main()
