@@ -30,6 +30,16 @@ class ProcessManager:
             self.__currentNeed.append(processNeeds)
 
         self.__safeInitial = self.__attemptAllocation()
+        self.__safeRequest = True
+        for resource in range(self.__numResources):
+            if self.__request[resource] > self.__current[0][resource]:
+                self.__safeRequest = False
+                break
+        if self.__safeRequest:
+            self.__allocatedAfterRequest = self.__current[0]
+            for resource in range(self.__numResources):
+                self.__allocatedAfterRequest[resource] -= self.__request[resource]
+
 
 
     def __attemptAllocation(self) -> bool:
@@ -127,6 +137,13 @@ class ProcessManager:
 
         requestVector = "1:" + " ".join(str(x) for x in self.__request)
 
+        if self.__safeRequest:
+            outputRequest = "THE REQUEST CAN BE GRANTED!"
+        else:
+            outputRequest = "THE REQUEST CANNOT BE GRANTED!"
+
+        availablePost = " ".join(str(x) for x in self.__allocatedAfterRequest)
+
         return (f"There are {self.__numProcesses} process in the system.\n"
                 f"\n"
                 f"There are {self.__numResources} resource types.\n"
@@ -147,11 +164,11 @@ class ProcessManager:
                 f"  A B C D\n"
                 f"{requestVector}\n"
                 f"\n"
-                f"!!OUTPUT -- REQUEST!!\n"
+                f"{outputRequest}\n"
                 f"\n"
                 f"The Available Vector is...\n"
                 f"A B C D\n"
-                f""
+                f"{availablePost}\n"
                 )
 
 
